@@ -1,0 +1,9 @@
+# Ignore GAS project settings
+.gsclient/
+.scratch/
+.clasp.json
+
+# Ignore user-specific files
+*.gsuser
+*.gscript
+config.json
