@@ -6,4 +6,4 @@
 # Ignore user-specific files
 *.gsuser
 *.gscript
-config.json
+.env
