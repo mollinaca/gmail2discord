@@ -7,3 +7,7 @@
 *.gsuser
 *.gscript
 .env
+
+# files
+*.png
+*.jpg
