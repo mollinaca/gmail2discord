@@ -1,0 +1,44 @@
+import os
+import sys
+import requests
+from dotenv import load_dotenv
+
+load_dotenv()
+
+
+def upload_image(file_path):
+    bot_token = os.getenv('BOT_TOKEN')
+    channel_id = os.getenv('CHANNEL_ID')
+    print(bot_token)
+    print(channel_id)
+    api_url = f'https://discord.com/api/v10/channels/{channel_id}/messages'
+
+    headers = {
+        'Authorization': f'Bot {bot_token}',
+    }
+
+    data = {
+        'content': "description",
+    }
+
+    files = {
+        'file': ('image.jpg', open(file_path, 'rb'), 'image/jpeg'),
+    }
+
+    response = requests.post(api_url, headers=headers, data=data, files=files)
+
+    if response.status_code == 200:
+        result = response.json()
+        image_url = result['attachments'][0]['url']
+        print('Posted file URL : ', image_url)
+    else:
+        print('Error : ', response.status_code, response.text)
+
+
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("Input filepath.")
+        sys.exit(1)
+
+    file_path = sys.argv[1]
+    upload_image(file_path)
