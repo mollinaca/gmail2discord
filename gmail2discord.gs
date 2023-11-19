@@ -17,7 +17,8 @@ function hook() {
         }
 
         // Webhook URLを取得
-        const webhook = sheet.getRange(rowIndex, 2).getValue();
+        const webhook = sheet.getRange(rowIndex + 1, 1).getValue();
+        Logger.log('webhook : ' + webhook)
 
         // Gmail検索
         const threads = GmailApp.search('is:unread ' + label);
@@ -33,14 +34,16 @@ function hook() {
                         const from = message.getFrom();
                         const subject = message.getSubject();
                         const plainBody = message.getPlainBody();
-                        const username = label == "dev_test" ? "dev_test bot" : null;
-                        const avatar_url = labe == "dev_test" ? "https://cdn.discordapp.com/attachments/1175432721489739887/1175451785775824896/image.jpg?ex=656b47c8&is=6558d2c8&hm=85152dda481d1b9c7eead64f283ad20b2ef0229b2fdc4e08976ab8d96f6d4e8e&" : null;
+                        const username = sheet.getRange(rowIndex + 1, 2).getValue();
+                        Logger.log('username : ' + username)
+                        const avatar_url = sheet.getRange(rowIndex + 1, 3).getValue();
+                        Logger.log('avatar_url : ' + avatar_url)
 
 
                         Logger.log(subject);
                         const payload = {
-                            ...(username ? { username: username } : {}),
-                            ...(avatar_url ? { avatar_url: avatar_url } : {}),
+                            username: username,
+                            avatar_url: avatar_url,
                             content: subject,
                             embeds: [{
                                 title: subject,
