@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import os
 import sys
 import requests
@@ -7,8 +8,8 @@ load_dotenv()
 
 
 def upload_image(file_path):
-    bot_token = os.getenv('BOT_TOKEN')
-    channel_id = os.getenv('CHANNEL_ID')
+    bot_token = os.getenv('DOSCORD_BOT_ID_FILE_ADMIN')
+    channel_id = os.getenv('DISCORD_CHANNEL_ID_FILESPACE')
     print(bot_token)
     print(channel_id)
     api_url = f'https://discord.com/api/v10/channels/{channel_id}/messages'
@@ -17,15 +18,11 @@ def upload_image(file_path):
         'Authorization': f'Bot {bot_token}',
     }
 
-    data = {
-        'content': "description",
-    }
-
     files = {
         'file': ('image.jpg', open(file_path, 'rb'), 'image/jpeg'),
     }
 
-    response = requests.post(api_url, headers=headers, data=data, files=files)
+    response = requests.post(api_url, headers=headers, files=files)
 
     if response.status_code == 200:
         result = response.json()
